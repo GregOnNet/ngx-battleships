@@ -1,5 +1,5 @@
 import { Coordinate } from './coordinate';
-import { Battleship } from './battleship';
+import { Warhsip } from './warship';
 
 describe('Spawning a Battleship', () => {
   /**
@@ -9,7 +9,7 @@ describe('Spawning a Battleship', () => {
    * 3 x
    */
   it('should has coordinates aligned vertical', () => {
-    const battleShip = new Battleship([[1, 1], [2, 1], [3, 1]], 3);
+    const battleShip = new Warhsip([[1, 1], [2, 1], [3, 1]], 3);
     expect(battleShip.coordinates.length).toBe(3);
   });
 
@@ -18,7 +18,7 @@ describe('Spawning a Battleship', () => {
    * 1 x x x
    */
   it('should has coordinates aligned vertical', () => {
-    const battleShip = new Battleship([[1, 1], [2, 1], [3, 1]], 3);
+    const battleShip = new Warhsip([[1, 1], [2, 1], [3, 1]], 3);
     expect(battleShip.coordinates.length).toBe(3);
   });
 
@@ -30,7 +30,7 @@ describe('Spawning a Battleship', () => {
    */
   it('should raise an error if coodinates are diagonal', () => {
     expect(() =>
-      new Battleship([[1, 1], [2, 2], [1, 3]], 3)
+      new Warhsip([[1, 1], [2, 2], [1, 3]], 3)
     ).toThrow();
   });
 
@@ -41,7 +41,7 @@ describe('Spawning a Battleship', () => {
    */
   it('should raise an error if ship goes round the corner ', () => {
     expect(() =>
-      new Battleship([[1, 1], [2, 1], [2, 2]], 3)
+      new Warhsip([[1, 1], [2, 1], [2, 2]], 3)
     ).toThrow();
   });
 
@@ -53,7 +53,7 @@ describe('Spawning a Battleship', () => {
    */
   it('should raise an error if coodinates are the same', () => {
     expect(() =>
-      new Battleship([[1, 1], [1, 1], [1, 3]], 3)
+      new Warhsip([[1, 1], [1, 1], [1, 3]], 3)
     ).toThrow();
   });
 
@@ -65,14 +65,14 @@ describe('Spawning a Battleship', () => {
    */
   it('should raise an error if coodinates are no neighbours', () => {
     expect(() =>
-      new Battleship([[1, 1], [3, 1], [1, 3]], 3)
+      new Warhsip([[1, 1], [3, 1], [1, 3]], 3)
     ).toThrow();
   });
 });
 
 describe('Destroying a Battleship', () => {
   it('should destroy a part of the ship after it was hit', () => {
-    const battleship = new Battleship([[1, 1], [2, 1]], 2);
+    const battleship = new Warhsip([[1, 1], [2, 1]], 2);
     battleship.hit([1, 1]);
 
     expect(battleship.intactParts).toEqual([new Coordinate(2, 1)]);

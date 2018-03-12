@@ -1,7 +1,7 @@
 import { Coordinate } from './coordinate';
 import { AlignedCoordinate } from './aligned-coordinate';
 
-export class Battleship {
+export class Warhsip {
   private _type = this.constructor.name;
 
   coordinates: Coordinate[];
