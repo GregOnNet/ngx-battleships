@@ -2,16 +2,16 @@ import { Coordinate } from './coordinate';
 import { AlignedCoordinate } from './aligned-coordinate';
 
 export class Warhsip {
-  private _type = this.constructor.name;
+  name = this.constructor.name;
 
   coordinates: Coordinate[];
   intactParts: Coordinate[];
 
-  constructor(coordinates: [number, number][], private totalHits: number) {
+  constructor(coordinates: [number, number][], public parts: number) {
     this.coordinates = coordinates.map(c => new Coordinate(c[0], c[1]));
     this.intactParts = [...this.coordinates];
 
-    this._throwIfHasNotRightCountOfCoordinates(totalHits, this.coordinates);
+    this._throwIfHasNotRightCountOfCoordinates(parts, this.coordinates);
     this._throwIfNotInLine(this.coordinates);
     this._throwIfEqual(this.coordinates);
     this._throwIfDiagonal(this.coordinates);
@@ -29,7 +29,7 @@ export class Warhsip {
   ) {
     if (coordinates.length !== allowedCount) {
       throw new Error(
-        `${this._type}: The ship must have ${allowedCount} coordinates.`
+        `${this.name}: The ship must have ${allowedCount} coordinates.`
       );
     }
   }
@@ -40,7 +40,7 @@ export class Warhsip {
 
     if (areXsNotInLine && areYsNotInLine) {
       throw new Error(
-        `${this._type}: The ship is not allowed to go around the corner.`
+        `${this.name}: The ship is not allowed to go around the corner.`
       );
     }
   }
@@ -50,7 +50,7 @@ export class Warhsip {
 
     if (unique.size !== coordinates.length) {
       throw new Error(
-        `${this._type}: The ship must have different coordinates.`
+        `${this.name}: The ship must have different coordinates.`
       );
     }
   }
@@ -59,7 +59,7 @@ export class Warhsip {
     coordinates.reduce((previous, current) => {
       if (previous.x < current.x && previous.y < current.y) {
         throw new Error(
-          `${this._type}: The ship must no be diagonal.`
+          `${this.name}: The ship must no be diagonal.`
         );
       }
       return current;
@@ -71,7 +71,7 @@ export class Warhsip {
       if (this._distanceOf(previous.x, current.x) > 1 ||
         this._distanceOf(previous.y, current.y) > 1) {
         throw new Error(
-          `${this._type}: The ship must not have gaps.`
+          `${this.name}: The ship must not have gaps.`
         );
       }
       return current;

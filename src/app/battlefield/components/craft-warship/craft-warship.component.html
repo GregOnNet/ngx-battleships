@@ -1,0 +1,18 @@
+<form [formGroup]="warshipForm">
+  <mat-form-field>
+    <mat-select placeholder="Choose warship" formControlName="warship">
+      <mat-select-trigger>
+        <mat-icon [svgIcon]="selectedWarship.icon"></mat-icon>
+        {{ selectedWarship.type }}
+      </mat-select-trigger>
+      <mat-option
+        *ngFor="let ship of warships"
+        [value]="ship"
+        (onSelectionChange)="updateCurrentWarship(ship)"
+        >
+        <mat-icon [svgIcon]="ship.icon"></mat-icon>
+        {{ ship.type }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
