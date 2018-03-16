@@ -1,5 +1,5 @@
-import { Coordinate } from './coordinate';
-import { AlignedCoordinate } from './aligned-coordinate';
+import { Coordinate } from '../coordinate';
+import { AlignedCoordinate } from '../aligned-coordinate';
 
 export class Warhsip {
   name = this.constructor.name;
@@ -12,6 +12,7 @@ export class Warhsip {
     this.intactParts = [...this.coordinates];
 
     this._throwIfHasNotRightCountOfCoordinates(parts, this.coordinates);
+    this._throwIfInvalidCoordinatesHavePassed(this.coordinates);
     this._throwIfNotInLine(this.coordinates);
     this._throwIfEqual(this.coordinates);
     this._throwIfDiagonal(this.coordinates);
@@ -30,6 +31,19 @@ export class Warhsip {
     if (coordinates.length !== allowedCount) {
       throw new Error(
         `${this.name}: The ship must have ${allowedCount} coordinates.`
+      );
+    }
+  }
+
+  private _throwIfInvalidCoordinatesHavePassed(coordinates: Coordinate[]) {
+    const invalidCoordinate = coordinates.find(
+      coordinate => coordinate.x < 1 || coordinate.y < 1
+    );
+
+    if (invalidCoordinate) {
+      throw new Error(
+        `${this.name}: The smallest possible coordinate is [1, 1].` +
+        `X: ${invalidCoordinate.x}, Y: ${invalidCoordinate.y} is not valid.`
       );
     }
   }
@@ -58,9 +72,7 @@ export class Warhsip {
   private _throwIfDiagonal(coordinates: Coordinate[]) {
     coordinates.reduce((previous, current) => {
       if (previous.x < current.x && previous.y < current.y) {
-        throw new Error(
-          `${this.name}: The ship must no be diagonal.`
-        );
+        throw new Error(`${this.name}: The ship must no be diagonal.`);
       }
       return current;
     });
@@ -68,11 +80,11 @@ export class Warhsip {
 
   private _throwIfNoDirectNeighbours(coordinates: Coordinate[]) {
     coordinates.reduce((previous, current) => {
-      if (this._distanceOf(previous.x, current.x) > 1 ||
-        this._distanceOf(previous.y, current.y) > 1) {
-        throw new Error(
-          `${this.name}: The ship must not have gaps.`
-        );
+      if (
+        this._distanceOf(previous.x, current.x) > 1 ||
+        this._distanceOf(previous.y, current.y) > 1
+      ) {
+        throw new Error(`${this.name}: The ship must not have gaps.`);
       }
       return current;
     });
@@ -86,12 +98,12 @@ export class Warhsip {
     coordinates: Coordinate[],
     selector: (c: Coordinate) => number
   ): boolean {
-    return coordinates
-      .map(selector)
-      .reduce<AlignedCoordinate>((prev, curr) => ({
+    return coordinates.map(selector).reduce<AlignedCoordinate>(
+      (prev, curr) => ({
         areNotInLine: prev.areNotInLine || prev.value === curr,
         value: curr
-      }), { areNotInLine: false, value: 0 })
-      .areNotInLine;
+      }),
+      { areNotInLine: false, value: 0 }
+    ).areNotInLine;
   }
 }

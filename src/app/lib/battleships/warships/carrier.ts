@@ -1,7 +1,7 @@
 import { Warhsip } from './warship';
 
 export class Carrier extends Warhsip {
-  constructor(coordinates) {
+  constructor(coordinates: [number, number][]) {
     super(coordinates, 5);
   }
 }

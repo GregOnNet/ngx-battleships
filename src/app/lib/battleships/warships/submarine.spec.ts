@@ -1,4 +1,4 @@
-import { Coordinate } from './coordinate';
+import { Coordinate } from '../coordinate';
 import { Submarine } from './submarine';
 
 describe('Spawning a submarine', () => {

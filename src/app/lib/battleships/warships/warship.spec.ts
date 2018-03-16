@@ -1,4 +1,4 @@
-import { Coordinate } from './coordinate';
+import { Coordinate } from '../coordinate';
 import { Warhsip } from './warship';
 
 describe('Spawning a Battleship', () => {
@@ -20,6 +20,12 @@ describe('Spawning a Battleship', () => {
   it('should has coordinates aligned vertical', () => {
     const battleShip = new Warhsip([[1, 1], [2, 1], [3, 1]], 3);
     expect(battleShip.coordinates.length).toBe(3);
+  });
+
+  it('should raise an error if coodinates are smaller then [1, 1]', () => {
+    expect(() =>
+      new Warhsip([[0, 0]], 1)
+    ).toThrow();
   });
 
   /**
