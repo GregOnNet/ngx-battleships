@@ -1,0 +1,17 @@
+<mat-form-field>
+  <input
+    matInput
+    #x
+    [value]="coordinate.x"
+    (change)="setCoordinate(x.value, y.value)"
+    placeholder="X">
+</mat-form-field>
+
+<mat-form-field>
+  <input
+    matInput
+    #y
+    [value]="coordinate.y"
+    (change)="setCoordinate(x.value, y.value)"
+    placeholder="Y">
+</mat-form-field>
