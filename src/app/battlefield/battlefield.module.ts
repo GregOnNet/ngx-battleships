@@ -18,6 +18,7 @@ import * as fromBattlefield from './battlefield.reducer';
 import { CoordinateInputComponent } from './components/coordinate-input/coordinate-input.component';
 import { CraftWarshipComponent } from './components/craft-warship/craft-warship.component';
 import { HarbourComponent } from './containers/harbour/harbour.component';
+import { ShipSelectorComponent } from './components/ship-selector/ship-selector.component';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { HarbourComponent } from './containers/harbour/harbour.component';
   declarations: [
     HarbourComponent,
     CraftWarshipComponent,
-    CoordinateInputComponent
+    CoordinateInputComponent,
+    ShipSelectorComponent
   ],
   exports: [CraftWarshipComponent]
 })

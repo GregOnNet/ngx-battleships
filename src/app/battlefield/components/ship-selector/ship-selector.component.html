@@ -1,0 +1,14 @@
+<mat-form-field>
+  <mat-select
+    placeholder="Choose warship"
+    (selectionChange)="emitSelectedShip($event.value)">
+    <mat-select-trigger *ngIf="selectedSkeleton">
+      <mat-icon [svgIcon]="selectedSkeleton.icon"></mat-icon>
+      {{ selectedSkeleton.type }} ({{ selectedSkeleton.length }})
+    </mat-select-trigger>
+    <mat-option *ngFor="let ship of warshipSkeletons" [value]="ship">
+      <mat-icon [svgIcon]="ship.icon"></mat-icon>
+      {{ ship.type }} ({{ ship.length }})
+    </mat-option>
+  </mat-select>
+</mat-form-field>

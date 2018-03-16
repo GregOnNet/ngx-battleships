@@ -1,19 +1,4 @@
-<mat-form-field>
-  <mat-select
-    placeholder="Choose warship"
-    (selectionChange)="updateCurrentWarship($event.value)">
-    <mat-select-trigger>
-      <mat-icon [svgIcon]="selectedWarship.icon"></mat-icon>
-      {{ selectedWarship.type }}
-    </mat-select-trigger>
-    <mat-option
-      *ngFor="let ship of warships"
-      [value]="ship">
-    <mat-icon [svgIcon]="ship.icon"></mat-icon>
-    {{ ship.type }}
-  </mat-option>
-</mat-select>
-</mat-form-field>
+<bs-ship-selector (change)="setupCoordinatesForm($event)" ></bs-ship-selector>
 
 <form [formGroup]="warshipForm">
   <ng-container
