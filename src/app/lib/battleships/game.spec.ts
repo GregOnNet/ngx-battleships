@@ -1,14 +1,25 @@
 import { Destroyer } from './warships/destroyer';
-import { Warhsip } from '.';
+import { Warhsip, Coordinate } from '.';
 
 describe('Game is not ready', () => {
   describe('When a game does not have 5 destroyer', () => {
     it('should indicate that the game is not ready', () => {
       const game = new Game();
       const destroyer = new Destroyer([[1, 1], [1, 2]]);
-      game.addDestroyer(destroyer);
+      game.addWarship(destroyer);
 
       expect(game.isReadyToPlay).toBe(false);
+    });
+  });
+
+  describe('When two warships have a same coordinate', () => {
+    it('should fail', () => {
+      const game = new Game();
+      const destroyer = new Destroyer([[1, 1], [1, 2]]);
+
+      game.addWarship(destroyer);
+
+      expect(() => game.addWarship(destroyer)).toThrow();
     });
   });
 });
@@ -20,8 +31,8 @@ describe('Game is ready to play', () => {
       const destroyer_1 = new Destroyer([[1, 1], [1, 2]]);
       const destroyer_2 = new Destroyer([[3, 3], [3, 4]]);
 
-      game.addDestroyer(destroyer_1);
-      game.addDestroyer(destroyer_2);
+      game.addWarship(destroyer_1);
+      game.addWarship(destroyer_2);
 
       expect(game.isReadyToPlay).toBe(true);
     });
@@ -37,9 +48,25 @@ export class Game {
 
   constructor(private _warships: Warhsip[] = []) {}
 
-  addDestroyer(destroyer: Destroyer) {
-    this._warships = [...this._warships, destroyer];
+  addWarship(warship: Destroyer) {
+    this._throwIfCoordinatesAreAlreadyTaken(warship.coordinates);
+
+    this._warships = [...this._warships, warship];
     this._updateReadiness();
+  }
+
+  private _throwIfCoordinatesAreAlreadyTaken(coordinates: Coordinate[]): void {
+    const takenCoordinate = this._warships
+      .map(warship => warship.coordinates)
+      .reduce((prev, curr) => prev.concat(curr), [])
+      .find(coordinate => coordinates.some(c => c === coordinate));
+
+    if (takenCoordinate) {
+      throw new Error(
+        `Sorry, but the field [${takenCoordinate.x}, ${takenCoordinate.y}]` +
+          'is already taken.'
+      );
+    }
   }
 
   private _updateReadiness(): void {
