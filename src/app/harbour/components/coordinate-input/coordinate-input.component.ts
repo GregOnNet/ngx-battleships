@@ -24,7 +24,8 @@ export class CoordinateInputComponent implements ControlValueAccessor {
   writeValue(coordinate: Coordinate): void {
     this.propagateTouch();
 
-    if (!coordinate) {
+    if (!coordinate  ||
+        coordinate.isEqual(this.coordinate)) {
       return;
     }
 

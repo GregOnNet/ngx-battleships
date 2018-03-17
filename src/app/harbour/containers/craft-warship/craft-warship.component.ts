@@ -20,6 +20,7 @@ import { combineLatest } from 'rxjs/observable/combineLatest';
 })
 export class CraftWarshipComponent implements OnInit {
   warshipPlan$: Observable<IProvideWarshipPlan>;
+  battlefieldPosition$: Observable<BattleFieldPosition[]>;
 
   formError: string;
 
@@ -42,11 +43,29 @@ export class CraftWarshipComponent implements OnInit {
   constructor(
     private _store: Store<fromHarbour.State>,
     private _fb: FormBuilder
-  ) {}
+  ) {
+    this.warshipForm = this._provideCoordinateForm();
+  }
 
   ngOnInit(): void {
-    this.warshipForm = this._provideCoordinateForm();
-    this.warshipPlan$ = this._selectShipPlan();
+    this.warshipPlan$ = this._store.pipe(
+      select(fromHarbour.all),
+      tap(harbour => {
+        this.updateCoordinatesForm(harbour.plan);
+        this._fillCoordinateForm(harbour.position);
+      }),
+      map(harbour => harbour.plan)
+    );
+
+    // this.battlefieldPosition$ = this._store.pipe(
+    //   select(fromHarbour.battlefieldPosition),
+    //   tap(coordinates => this._fillCoordinateForm(coordinates))
+    // );
+
+    // this.warshipPlan$ = this._selectShipPlan();
+    // this.battlefieldPosition$ = this._store.pipe(
+    //   select(fromHarbour.battlefieldPosition)
+    // );
   }
 
   updateCoordinatesForm(selectedPlan: IProvideWarshipPlan) {
@@ -89,6 +108,16 @@ export class CraftWarshipComponent implements OnInit {
     }
 
     return coordinateControls;
+  }
+
+  private _fillCoordinateForm(coordinates: BattleFieldPosition[]): void {
+    const coordinateForm = this.warshipForm.get('coordinates') as FormArray;
+
+    coordinates.forEach((c, i) =>
+      coordinateForm.controls[i].setValue(new Coordinate(c.x, c.y), {
+        emitEvent: false
+      })
+    );
   }
 
   private _selectShipPlan(): Observable<IProvideWarshipPlan> {
