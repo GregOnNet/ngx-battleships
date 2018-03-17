@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
 import { WarshipSkeleton } from '../../../lib/battleships';
 import * as Warship from '../../../lib/battleships';
@@ -17,10 +23,14 @@ export class ShipSelectorComponent {
   warshipSkeletons = WarshipSkeletons.all();
 
   emitSelectedShip(shipSkeleton: WarshipSkeleton) {
+    this.selectedShipPlan = shipSkeleton;
     this.change.emit(shipSkeleton);
   }
 
   canPreselect(origin: WarshipSkeleton, compare: WarshipSkeleton) {
+    if (!origin || !compare) {
+      return false;
+    }
     return origin.name === compare.name;
   }
 }

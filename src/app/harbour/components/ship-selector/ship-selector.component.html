@@ -4,7 +4,7 @@
     (selectionChange)="emitSelectedShip($event.value)"
     [compareWith]="canPreselect"
     [value]="selectedShipPlan">
-    <mat-select-trigger>
+    <mat-select-trigger *ngIf="selectedShipPlan">
       <mat-icon [svgIcon]="selectedShipPlan.icon"></mat-icon>
       {{ selectedShipPlan.name }} ({{ selectedShipPlan.parts }})
     </mat-select-trigger>

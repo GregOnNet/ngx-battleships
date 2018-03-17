@@ -1,17 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { tap, map } from 'rxjs/operators';
+import { combineLatest } from 'rxjs/observable/combineLatest';
+import { map } from 'rxjs/operators';
 
 import { Coordinate, Warhsip, WarshipSkeleton } from '../../../lib/battleships';
-import {
-  IProvideWarshipPlan,
-  BattleFieldPosition
-} from '../../../lib/battleships/contracts';
-import * as fromHarbour from '../../reducers';
-import * as Action from '../../actions';
-import { combineLatest } from 'rxjs/observable/combineLatest';
+import { BattleFieldPosition, IProvideWarshipPlan } from '../../../lib/battleships/contracts';
 
 @Component({
   selector: 'bs-craft-warship',
@@ -40,26 +34,11 @@ export class CraftWarshipComponent implements OnInit {
     );
   }
 
-  constructor(
-    private _store: Store<fromHarbour.State>,
-    private _fb: FormBuilder
-  ) {
+  constructor(private _fb: FormBuilder) {
     this.warshipForm = this._provideCoordinateForm();
   }
 
-  ngOnInit(): void {
-    this._store.dispatch(new Action.RecoverWarshipPlan());
-
-    this.warshipPlan$ = this._store.pipe(
-      select(fromHarbour.all),
-      tap(harbour => {
-        this.updateCoordinatesForm(harbour.plan);
-        this._fillCoordinateForm(harbour.position);
-      }),
-      map(harbour => harbour.plan)
-    );
-
-  }
+  ngOnInit(): void {}
 
   updateCoordinatesForm(selectedPlan: IProvideWarshipPlan) {
     const coordinates = this.warshipForm.get('coordinates') as FormArray;
@@ -67,13 +46,14 @@ export class CraftWarshipComponent implements OnInit {
 
     combineLatest(coordinates.controls.map(c => c.valueChanges))
       .pipe(map(() => this._enteredCoodinates))
-      .subscribe(positions =>
-        this._store.dispatch(new Action.DeclareMissionTarget(positions))
+      .subscribe(
+        positions => console.log(positions) /* update coordinates in store */
       );
   }
 
   changeWharshipPlan(shipSkeleton: WarshipSkeleton) {
-    this._store.dispatch(new Action.ChooseWarshipPlan(shipSkeleton));
+    this.updateCoordinatesForm(shipSkeleton);
+    /** change warship plan in store */
   }
 
   craftWarship() {
@@ -110,13 +90,6 @@ export class CraftWarshipComponent implements OnInit {
       coordinateForm.controls[i].setValue(new Coordinate(c.x, c.y), {
         emitEvent: false
       })
-    );
-  }
-
-  private _selectShipPlan(): Observable<IProvideWarshipPlan> {
-    return this._store.pipe(
-      select(fromHarbour.warshipPlan),
-      tap(selectedPlan => this.updateCoordinatesForm(selectedPlan))
     );
   }
 }
