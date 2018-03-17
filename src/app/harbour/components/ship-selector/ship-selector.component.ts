@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from 
 
 import { WarshipSkeleton } from '../../../lib/battleships';
 import * as Warship from '../../../lib/battleships';
+import { WarshipSkeletons } from '../../../lib/battleships/warship-skeleton/warship-skeletons';
 
 @Component({
   selector: 'bs-ship-selector',
@@ -13,13 +14,7 @@ export class ShipSelectorComponent {
   @Input() selectedShipPlan: WarshipSkeleton;
   @Output() change = new EventEmitter<WarshipSkeleton>();
 
-  warshipSkeletons = [
-    new WarshipSkeleton('Destroyer', Warship.Destroyer, 2),
-    new WarshipSkeleton('Submarine', Warship.Submarine, 3),
-    new WarshipSkeleton('Cruiser', Warship.Cruiser, 3),
-    new WarshipSkeleton('Battleship', Warship.Battleship, 4),
-    new WarshipSkeleton('Carrier', Warship.Carrier, 5)
-  ];
+  warshipSkeletons = WarshipSkeletons.all();
 
   emitSelectedShip(shipSkeleton: WarshipSkeleton) {
     this.change.emit(this.selectedShipPlan);
