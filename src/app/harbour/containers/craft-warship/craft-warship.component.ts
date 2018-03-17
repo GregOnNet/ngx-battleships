@@ -1,7 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 
 import { Coordinate, Warhsip, WarshipSkeleton } from '../../../lib/battleships';
+import { IProvideWarshipPlan } from '../../../lib/battleships/contracts';
+import * as fromHarbour from '../../redux';
+import * as Action from '../../redux/harbour.actions';
 
 @Component({
   selector: 'bs-craft-warship',
@@ -9,6 +14,8 @@ import { Coordinate, Warhsip, WarshipSkeleton } from '../../../lib/battleships';
   styleUrls: ['./craft-warship.component.scss']
 })
 export class CraftWarshipComponent implements OnInit {
+  warshipPlan$: Observable<IProvideWarshipPlan>;
+
   formError: string;
 
   selectedWarship: WarshipSkeleton = {} as WarshipSkeleton;
@@ -26,15 +33,21 @@ export class CraftWarshipComponent implements OnInit {
       );
   }
 
-  constructor(private _fb: FormBuilder) {}
+  constructor(
+    private _store: Store<fromHarbour.Slice>,
+    private _fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
+    this.warshipPlan$ = this._store.select(s => s.selectedShipPlan);
     this.warshipForm = this._fb.group({
       coordinates: this._fb.array([])
     });
   }
 
   setupCoordinatesForm(shipSkeleton: WarshipSkeleton) {
+    this._store.dispatch(new Action.SelectWarshipPlan(shipSkeleton));
+
     this.selectedWarship = shipSkeleton;
     const coordinates = this.warshipForm.get('coordinates') as FormArray;
     coordinates.controls = this._provideCoordinateControls(shipSkeleton.parts);

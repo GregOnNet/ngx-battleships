@@ -1,6 +1,9 @@
 <h2 class="mat-h2">Craft a new Warship</h2>
 
-<bs-ship-selector (change)="setupCoordinatesForm($event)"></bs-ship-selector>
+<bs-ship-selector
+  [selectedShipPlan]="warshipPlan$ | async"
+  (change)="setupCoordinatesForm($event)">
+</bs-ship-selector>
 
 <form [formGroup]="warshipForm" (ngSubmit)="craftWarship()">
   <ng-container

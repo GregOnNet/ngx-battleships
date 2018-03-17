@@ -1,22 +1,26 @@
-import { Action } from '@ngrx/store';
+import {
+  BattleFieldPosition,
+  IProvideWarshipPlan
+} from '../../lib/battleships/contracts';
 import { HarbourActions, HarbourActionTypes } from './harbour.actions';
 
-export interface State {
-  selectedShipSkeleton;
-  coordinates;
+export interface Slice {
+  selectedShipPlan: IProvideWarshipPlan;
+  coordinates: BattleFieldPosition[];
 }
 
-export const initialState: State = {
-  selectedShipSkeleton: {},
+export const initialState: Slice = {
+  selectedShipPlan: {} as IProvideWarshipPlan,
   coordinates: []
 };
 
-export function reducer(state = initialState, action: HarbourActions): State {
+export function reducer(state = initialState, action: HarbourActions): Slice {
   switch (action.type) {
-
-    case HarbourActionTypes.HarbourAction:
-      return state;
-
+    case HarbourActionTypes.SelectWarshipPlan:
+      return {
+        ...state,
+        selectedShipPlan: action.payload
+      };
 
     default:
       return state;

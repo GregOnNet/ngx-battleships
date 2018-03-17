@@ -6,7 +6,7 @@ import { HarbourActions, HarbourActionTypes } from './harbour.actions';
 export class HarbourEffects {
 
   @Effect()
-  effect$ = this.actions$.ofType(HarbourActionTypes.HarbourAction);
+  effect$ = this.actions$.ofType(HarbourActionTypes.SelectWarshipPlan);
 
   constructor(private actions$: Actions) {}
 }

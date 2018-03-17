@@ -15,7 +15,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { CoordinateInputComponent } from './components/coordinate-input/coordinate-input.component';
-import { CraftWarshipComponent } from './components/craft-warship/craft-warship.component';
+import { CraftWarshipComponent } from './containers/craft-warship/craft-warship.component';
 import { ShipSelectorComponent } from './components/ship-selector/ship-selector.component';
 import { HarbourComponent } from './harbour.component';
 import { HarbourRouting } from './harbour.routing';
@@ -38,7 +38,7 @@ import { HarbourEffects } from './redux';
 
     StoreModule.forFeature('harbour', fromHarbour.reducer),
 
-    EffectsModule.forFeature([HarbourEffects])
+    // EffectsModule.forFeature([HarbourEffects])
   ],
   declarations: [
     HarbourComponent,

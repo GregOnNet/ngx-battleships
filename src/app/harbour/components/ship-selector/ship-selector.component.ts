@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { WarshipSkeleton } from '../../../lib/battleships';
 import * as Warship from '../../../lib/battleships';
@@ -9,7 +9,7 @@ import * as Warship from '../../../lib/battleships';
   styleUrls: ['./ship-selector.component.scss']
 })
 export class ShipSelectorComponent {
-  selectedSkeleton: WarshipSkeleton;
+  @Input() selectedShipPlan: WarshipSkeleton;
   @Output() change = new EventEmitter<WarshipSkeleton>();
 
   warshipSkeletons = [
@@ -21,7 +21,7 @@ export class ShipSelectorComponent {
   ];
 
   emitSelectedShip(shipSkeleton: WarshipSkeleton) {
-    this.selectedSkeleton = shipSkeleton;
-    this.change.emit(this.selectedSkeleton);
+    this.selectedShipPlan = shipSkeleton;
+    this.change.emit(this.selectedShipPlan);
   }
 }

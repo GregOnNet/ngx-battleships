@@ -1,11 +1,14 @@
 import { Action } from '@ngrx/store';
+import { IProvideWarshipPlan } from '../../lib/battleships/contracts';
 
 export enum HarbourActionTypes {
-  HarbourAction = '[Harbour] Action'
+  SelectWarshipPlan = '[Harbour] Choose Warhsip Plan'
 }
 
-export class Harbour implements Action {
-  readonly type = HarbourActionTypes.HarbourAction;
+export class SelectWarshipPlan implements Action {
+  readonly type = HarbourActionTypes.SelectWarshipPlan;
+
+  constructor(public payload: IProvideWarshipPlan) {}
 }
 
-export type HarbourActions = Harbour;
+export type HarbourActions = SelectWarshipPlan;
