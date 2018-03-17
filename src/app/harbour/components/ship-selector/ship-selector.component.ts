@@ -17,7 +17,7 @@ export class ShipSelectorComponent {
   warshipSkeletons = WarshipSkeletons.all();
 
   emitSelectedShip(shipSkeleton: WarshipSkeleton) {
-    this.change.emit(this.selectedShipPlan);
+    this.change.emit(shipSkeleton);
   }
 
   canPreselect(origin: WarshipSkeleton, compare: WarshipSkeleton) {

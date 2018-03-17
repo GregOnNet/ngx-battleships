@@ -25,7 +25,7 @@ export const reducers: ActionReducerMap<HarbourSlice> = {
 export const visitHarbour = createFeatureSelector<HarbourSlice>('harbour');
 
 export const warshipPlan = createSelector(visitHarbour, slice =>
-  WarshipSkeletons.byName(slice.craftWarship.current.name);
+  WarshipSkeletons.byName(slice.craftWarship.current.name)
 );
 
 export const battlefieldPosition = createSelector(
