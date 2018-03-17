@@ -1,29 +1,24 @@
-import {
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output
-} from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { takeUntil, tap } from 'rxjs/operators';
-import { Subject } from 'rxjs/Subject';
+import { tap, map } from 'rxjs/operators';
 
 import { Coordinate, Warhsip, WarshipSkeleton } from '../../../lib/battleships';
-import { IProvideWarshipPlan } from '../../../lib/battleships/contracts';
-import * as fromHarbour from '../../redux';
-import * as Action from '../../redux/harbour.actions';
+import {
+  IProvideWarshipPlan,
+  BattleFieldPosition
+} from '../../../lib/battleships/contracts';
+import * as fromHarbour from '../../reducers';
+import * as Action from '../../actions';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 
 @Component({
   selector: 'bs-craft-warship',
   templateUrl: './craft-warship.component.html',
   styleUrls: ['./craft-warship.component.scss']
 })
-export class CraftWarshipComponent implements OnInit, OnDestroy {
-  private _destroyed$ = new Subject<boolean>();
-
+export class CraftWarshipComponent implements OnInit {
   warshipPlan$: Observable<IProvideWarshipPlan>;
 
   formError: string;
@@ -33,14 +28,15 @@ export class CraftWarshipComponent implements OnInit, OnDestroy {
 
   @Output() create = new EventEmitter<Warhsip>();
 
-  private get _enteredCoordinates(): [number, number][] {
+  private get _enteredCoodinates(): BattleFieldPosition[] {
     const enteredCoordinates = this.warshipForm.get('coordinates') as FormArray;
-    return enteredCoordinates.controls
-      .map(control => control.value)
-      .map(
-        (coordinate: Coordinate) =>
-          [coordinate.x, coordinate.y] as [number, number]
-      );
+    return enteredCoordinates.controls.map(control => control.value);
+  }
+
+  private get _enteredCoordinatesRaw(): [number, number][] {
+    return this._enteredCoodinates.map(
+      (c: Coordinate) => [c.x, c.y] as [number, number]
+    );
   }
 
   constructor(
@@ -49,28 +45,30 @@ export class CraftWarshipComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.warshipPlan$ = this._store.select(
-      s => s.harbour.harbour.selectedShipPlan
-    );
     this.warshipForm = this._provideCoordinateForm();
-  }
-
-  ngOnDestroy(): void {
-    this._destroyed$.next(true);
+    this.warshipPlan$ = this._selectShipPlan();
   }
 
   updateCoordinatesForm(selectedPlan: IProvideWarshipPlan) {
     const coordinates = this.warshipForm.get('coordinates') as FormArray;
     coordinates.controls = this._provideCoordinateControls(selectedPlan.parts);
+
+    combineLatest(coordinates.controls.map(c => c.valueChanges))
+      .pipe(map(() => this._enteredCoodinates))
+      .subscribe(positions =>
+        this._store.dispatch(new Action.DeclareMissionTarget(positions))
+      );
   }
 
   changeWharshipPlan(shipSkeleton: WarshipSkeleton) {
-    this._store.dispatch(new Action.SelectWarshipPlan(shipSkeleton));
+    this._store.dispatch(new Action.ChooseWarshipPlan(shipSkeleton));
   }
 
   craftWarship() {
     try {
-      const warship = new this.selectedWarship.type(this._enteredCoordinates);
+      const warship = new this.selectedWarship.type(
+        this._enteredCoordinatesRaw
+      );
       this.create.emit(warship);
     } catch (error) {
       this.formError = error.message;
@@ -83,7 +81,7 @@ export class CraftWarshipComponent implements OnInit, OnDestroy {
     });
   }
 
-  private _provideCoordinateControls(amunt: number) {
+  private _provideCoordinateControls(amunt: number): FormControl[] {
     const coordinateControls = [];
 
     for (let i = 0; i < amunt; i++) {
@@ -94,11 +92,9 @@ export class CraftWarshipComponent implements OnInit, OnDestroy {
   }
 
   private _selectShipPlan(): Observable<IProvideWarshipPlan> {
-    return this._store
-      .select(s => s.harbour.harbour.selectedShipPlan)
-      .pipe(
-        takeUntil(this._destroyed$),
-        tap(selectedPlan => this.updateCoordinatesForm(selectedPlan))
-      );
+    return this._store.pipe(
+      select(fromHarbour.warshipPlan),
+      tap(selectedPlan => this.updateCoordinatesForm(selectedPlan))
+    );
   }
 }
