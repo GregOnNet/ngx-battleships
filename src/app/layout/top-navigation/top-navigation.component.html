@@ -1,0 +1,4 @@
+<mat-toolbar color="primary">
+  <span>Battleships</span>
+  <a [routerLink]="link.path" *ngFor="let link of links">{{ link.text }}</a>
+</mat-toolbar>

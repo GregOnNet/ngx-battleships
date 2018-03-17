@@ -9,7 +9,7 @@ describe('Game is not ready', () => {
       const config: GameConfig = { neededShips: { destroyer: 5 } };
       const game = new Game(config);
       const destroyer = new Destroyer([[1, 1], [1, 2]]);
-      game.addWarship(destroyer);
+      game.spawnWarship(destroyer);
 
       expect(game.isReadyToPlay).toBe(false);
     });
@@ -21,9 +21,9 @@ describe('Game is not ready', () => {
       const game = new Game(config);
       const destroyer = new Destroyer([[1, 1], [1, 2]]);
 
-      game.addWarship(destroyer);
+      game.spawnWarship(destroyer);
 
-      expect(() => game.addWarship(destroyer)).toThrow();
+      expect(() => game.spawnWarship(destroyer)).toThrow();
     });
   });
 });
@@ -36,8 +36,8 @@ describe('Game is ready to play', () => {
       const destroyer_1 = new Destroyer([[1, 1], [1, 2]]);
       const destroyer_2 = new Destroyer([[3, 3], [3, 4]]);
 
-      game.addWarship(destroyer_1);
-      game.addWarship(destroyer_2);
+      game.spawnWarship(destroyer_1);
+      game.spawnWarship(destroyer_2);
 
       expect(game.isReadyToPlay).toBe(true);
     });
@@ -59,7 +59,7 @@ describe('Game is ready to play', () => {
         new Submarine([[3, 3], [3, 4], [3, 5]])
       ];
 
-      warships.forEach(warship => game.addWarship(warship));
+      warships.forEach(warship => game.spawnWarship(warship));
 
       expect(game.isReadyToPlay).toBe(true);
     });

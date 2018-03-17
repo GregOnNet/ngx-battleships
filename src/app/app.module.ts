@@ -7,8 +7,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
-import { BattlefieldModule } from './battlefield/battlefield.module';
+import { HarbourModule } from './harbour/harbour.module';
+import { LayoutModule } from './layout';
 import { metaReducers, reducers } from './reducers';
+import { RouterModule } from '@angular/router';
+import { AppRouting } from './app.routing';
 
 
 
@@ -20,11 +23,13 @@ import { metaReducers, reducers } from './reducers';
     BrowserModule,
     BrowserAnimationsModule,
 
+    RouterModule.forRoot([]),
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
 
-    BattlefieldModule
+    AppRouting,
+    LayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

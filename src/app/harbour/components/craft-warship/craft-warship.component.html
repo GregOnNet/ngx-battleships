@@ -1,0 +1,14 @@
+<h2 class="mat-h2">Craft a new Warship</h2>
+
+<bs-ship-selector (change)="setupCoordinatesForm($event)"></bs-ship-selector>
+
+<form [formGroup]="warshipForm" (ngSubmit)="craftWarship()">
+  <ng-container
+    formArrayName="coordinates"
+    *ngFor="let coordinate of warshipForm.get('coordinates')['controls'];
+    let i = index;">
+    <bs-coordinate-input [formControlName]="i"></bs-coordinate-input>
+  </ng-container>
+  <mat-error *ngIf="formError">{{ formError }}</mat-error>
+  <button mat-raised-button color="accent">Add to Game</button>
+</form>

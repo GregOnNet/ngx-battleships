@@ -2,9 +2,10 @@ export class WarshipSkeleton {
   icon: string;
 
   constructor(
-    public type: string,
+    public name: string,
+    public type: any,
     public length: number
   ) {
-    this.icon = type.toLocaleLowerCase();
+    this.icon = this.name.toLocaleLowerCase();
   }
 }

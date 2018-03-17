@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-harbour',
+  selector: 'bs-harbour',
   templateUrl: './harbour.component.html',
-  styleUrls: ['./harbour.component.css']
+  styleUrls: ['./harbour.component.scss']
 })
 export class HarbourComponent implements OnInit {
 

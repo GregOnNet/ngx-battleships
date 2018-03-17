@@ -3,52 +3,51 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
+  MatButtonModule,
   MatFormFieldModule,
   MatIconModule,
   MatIconRegistry,
   MatInputModule,
-  MatSelectModule
+  MatSelectModule,
 } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
 
-import { BattlefieldEffects } from './battlefield.effects';
-import * as fromBattlefield from './battlefield.reducer';
 import { CoordinateInputComponent } from './components/coordinate-input/coordinate-input.component';
 import { CraftWarshipComponent } from './components/craft-warship/craft-warship.component';
-import { HarbourComponent } from './containers/harbour/harbour.component';
 import { ShipSelectorComponent } from './components/ship-selector/ship-selector.component';
+import { HarbourComponent } from './harbour.component';
+import { HarbourRouting } from './harbour.routing';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
-    StoreModule.forFeature('battlefield', fromBattlefield.reducer),
-    EffectsModule.forFeature([BattlefieldEffects]),
-
     ReactiveFormsModule,
-    MatSelectModule,
-    MatIconModule,
+
+    MatButtonModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
+    MatSelectModule,
+
+    HarbourRouting
   ],
   declarations: [
     HarbourComponent,
-    CraftWarshipComponent,
     CoordinateInputComponent,
+    CraftWarshipComponent,
     ShipSelectorComponent
   ],
-  exports: [CraftWarshipComponent]
+  exports: [HarbourComponent]
 })
-export class BattlefieldModule {
+export class HarbourModule {
   constructor(private _icons: MatIconRegistry, private _trust: DomSanitizer) {
     ['destroyer', 'submarine', 'cruiser', 'battleship', 'carrier'].forEach(
       icon => this._registerSvgIcon(icon)
     );
   }
 
-  _registerSvgIcon(icon: string) {
+  private _registerSvgIcon(icon: string) {
     this._icons.addSvgIcon(
       icon,
       this._trust.bypassSecurityTrustResourceUrl(

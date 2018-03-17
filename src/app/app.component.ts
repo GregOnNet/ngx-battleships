@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import { NavigationLink } from './layout';
 
 @Component({
-  selector: 'app-root',
+  selector: 'bs-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  title = 'app';
+  links: NavigationLink[] = [
+    new NavigationLink('Craft Battleship', '/harbour')
+   ];
 }

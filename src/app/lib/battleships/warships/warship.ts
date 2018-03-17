@@ -1,7 +1,8 @@
-import { Coordinate } from '../coordinate';
 import { AlignedCoordinate } from '../aligned-coordinate';
+import { Coordinate } from '../coordinate';
+import { IDestroyWarShips } from './i-destroy-warships';
 
-export class Warhsip {
+export class Warhsip implements IDestroyWarShips {
   name = this.constructor.name;
 
   coordinates: Coordinate[];
@@ -36,6 +37,7 @@ export class Warhsip {
   }
 
   private _throwIfInvalidCoordinatesHavePassed(coordinates: Coordinate[]) {
+    console.log(coordinates);
     const invalidCoordinate = coordinates.find(
       coordinate => coordinate.x < 1 || coordinate.y < 1
     );

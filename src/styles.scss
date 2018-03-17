@@ -1,4 +1,6 @@
 @import 'scss/_material-icons';
+@import '~normalize.css/normalize.css';
+
 
 // Choose your angular/material-theme :-)
 // - deeppurple-amber.css
@@ -6,3 +8,8 @@
 // - pink-bluegrey.css
 // - purple-green.css
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+main {
+  padding-left: 16px;
+  padding-right: 16px;
+}
