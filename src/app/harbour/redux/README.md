@@ -6,3 +6,7 @@
 
 - SelectedWarshipType
 - Coordinates
+
+### Actions
+
+- '[Harbour] Choose Warhsip Skeleton'

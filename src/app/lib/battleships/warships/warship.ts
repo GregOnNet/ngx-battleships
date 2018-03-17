@@ -1,6 +1,6 @@
 import { AlignedCoordinate } from '../aligned-coordinate';
+import { IDestroyWarShips } from '../contracts/i-destroy-warships';
 import { Coordinate } from '../coordinate';
-import { IDestroyWarShips } from './i-destroy-warships';
 
 export class Warhsip implements IDestroyWarShips {
   name = this.constructor.name;
@@ -45,7 +45,7 @@ export class Warhsip implements IDestroyWarShips {
     if (invalidCoordinate) {
       throw new Error(
         `${this.name}: The smallest possible coordinate is [1, 1].` +
-        `X: ${invalidCoordinate.x}, Y: ${invalidCoordinate.y} is not valid.`
+          `X: ${invalidCoordinate.x}, Y: ${invalidCoordinate.y} is not valid.`
       );
     }
   }

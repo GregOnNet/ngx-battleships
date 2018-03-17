@@ -1,4 +1,4 @@
-import { IDestroyWarShips } from './warships/i-destroy-warships';
+import { IDestroyWarShips } from './i-destroy-warships';
 
 export interface IHostBattlefield {
   isReadyToPlays: boolean;

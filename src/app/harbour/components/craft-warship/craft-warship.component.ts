@@ -37,7 +37,7 @@ export class CraftWarshipComponent implements OnInit {
   setupCoordinatesForm(shipSkeleton: WarshipSkeleton) {
     this.selectedWarship = shipSkeleton;
     const coordinates = this.warshipForm.get('coordinates') as FormArray;
-    coordinates.controls = this._provideCoordinateControls(shipSkeleton.length);
+    coordinates.controls = this._provideCoordinateControls(shipSkeleton.parts);
   }
 
   craftWarship() {

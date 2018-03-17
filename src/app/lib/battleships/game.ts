@@ -1,7 +1,7 @@
 import { Coordinate } from './coordinate';
 import { GameConfig } from './game-config';
 import { Warhsip } from './warships/warship';
-import { IDestroyWarShips } from './warships/i-destroy-warships';
+import { IDestroyWarShips } from './contracts';
 
 export class Game {
   private _warships: IDestroyWarShips[] = [];

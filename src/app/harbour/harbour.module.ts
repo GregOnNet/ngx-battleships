@@ -8,15 +8,19 @@ import {
   MatIconModule,
   MatIconRegistry,
   MatInputModule,
-  MatSelectModule,
+  MatSelectModule
 } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
 import { CoordinateInputComponent } from './components/coordinate-input/coordinate-input.component';
 import { CraftWarshipComponent } from './components/craft-warship/craft-warship.component';
 import { ShipSelectorComponent } from './components/ship-selector/ship-selector.component';
 import { HarbourComponent } from './harbour.component';
 import { HarbourRouting } from './harbour.routing';
+import * as fromHarbour from './redux';
+import { HarbourEffects } from './redux';
 
 @NgModule({
   imports: [
@@ -30,7 +34,11 @@ import { HarbourRouting } from './harbour.routing';
     MatInputModule,
     MatSelectModule,
 
-    HarbourRouting
+    HarbourRouting,
+
+    StoreModule.forFeature('harbour', fromHarbour.reducer),
+
+    EffectsModule.forFeature([HarbourEffects])
   ],
   declarations: [
     HarbourComponent,
