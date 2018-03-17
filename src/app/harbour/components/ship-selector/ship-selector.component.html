@@ -1,8 +1,10 @@
 <mat-form-field>
   <mat-select
     placeholder="Choose warship"
-    (selectionChange)="emitSelectedShip($event.value)">
-    <mat-select-trigger *ngIf="selectedShipPlan">
+    (selectionChange)="emitSelectedShip($event.value)"
+    [compareWith]="canPreselect"
+    [value]="selectedShipPlan">
+    <mat-select-trigger>
       <mat-icon [svgIcon]="selectedShipPlan.icon"></mat-icon>
       {{ selectedShipPlan.name }} ({{ selectedShipPlan.parts }})
     </mat-select-trigger>

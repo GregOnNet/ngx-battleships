@@ -19,6 +19,11 @@ export function reducer(state = initialState, action: CraftWarshipActions): Slic
         ...state,
         current: action.payload
       };
+    case CraftWarshipActionTypes.RecoverWarshipPlanSuccess:
+      return {
+        ...state,
+        current: action.payload
+      };
 
     default:
       return state;

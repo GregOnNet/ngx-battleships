@@ -48,6 +48,8 @@ export class CraftWarshipComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._store.dispatch(new Action.RecoverWarshipPlan());
+
     this.warshipPlan$ = this._store.pipe(
       select(fromHarbour.all),
       tap(harbour => {
@@ -57,15 +59,6 @@ export class CraftWarshipComponent implements OnInit {
       map(harbour => harbour.plan)
     );
 
-    // this.battlefieldPosition$ = this._store.pipe(
-    //   select(fromHarbour.battlefieldPosition),
-    //   tap(coordinates => this._fillCoordinateForm(coordinates))
-    // );
-
-    // this.warshipPlan$ = this._selectShipPlan();
-    // this.battlefieldPosition$ = this._store.pipe(
-    //   select(fromHarbour.battlefieldPosition)
-    // );
   }
 
   updateCoordinatesForm(selectedPlan: IProvideWarshipPlan) {

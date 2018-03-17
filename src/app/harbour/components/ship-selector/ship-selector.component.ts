@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 
 import { WarshipSkeleton } from '../../../lib/battleships';
 import * as Warship from '../../../lib/battleships';
@@ -6,7 +6,8 @@ import * as Warship from '../../../lib/battleships';
 @Component({
   selector: 'bs-ship-selector',
   templateUrl: './ship-selector.component.html',
-  styleUrls: ['./ship-selector.component.scss']
+  styleUrls: ['./ship-selector.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShipSelectorComponent {
   @Input() selectedShipPlan: WarshipSkeleton;
@@ -21,7 +22,10 @@ export class ShipSelectorComponent {
   ];
 
   emitSelectedShip(shipSkeleton: WarshipSkeleton) {
-    this.selectedShipPlan = shipSkeleton;
     this.change.emit(this.selectedShipPlan);
+  }
+
+  canPreselect(origin: WarshipSkeleton, compare: WarshipSkeleton) {
+    return origin.name === compare.name;
   }
 }
