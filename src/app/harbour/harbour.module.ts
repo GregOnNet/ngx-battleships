@@ -19,8 +19,8 @@ import { CraftWarshipComponent } from './containers/craft-warship/craft-warship.
 import { ShipSelectorComponent } from './components/ship-selector/ship-selector.component';
 import { HarbourComponent } from './harbour.component';
 import { HarbourRouting } from './harbour.routing';
-import * as fromHarbour from './redux';
-import { HarbourEffects } from './redux';
+
+import { HarbourEffects, reducers } from './redux';
 
 @NgModule({
   imports: [
@@ -36,7 +36,7 @@ import { HarbourEffects } from './redux';
 
     HarbourRouting,
 
-    StoreModule.forFeature('harbour', fromHarbour.reducer),
+    StoreModule.forFeature('harbour', reducers),
 
     // EffectsModule.forFeature([HarbourEffects])
   ],

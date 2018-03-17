@@ -2,7 +2,7 @@
 
 <bs-ship-selector
   [selectedShipPlan]="warshipPlan$ | async"
-  (change)="setupCoordinatesForm($event)">
+  (change)="changeWharshipPlan($event)">
 </bs-ship-selector>
 
 <form [formGroup]="warshipForm" (ngSubmit)="craftWarship()">
