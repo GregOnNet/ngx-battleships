@@ -14,14 +14,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
+import { LocalStorageModule } from '../lib/local-storage';
 import { CoordinateInputComponent } from './components/coordinate-input/coordinate-input.component';
-import { CraftWarshipComponent } from './containers/craft-warship/craft-warship.component';
 import { ShipSelectorComponent } from './components/ship-selector/ship-selector.component';
+import { CraftWarshipComponent } from './containers/craft-warship/craft-warship.component';
+import { CraftWarshipEffects } from './effects';
 import { HarbourComponent } from './harbour.component';
 import { HarbourRouting } from './harbour.routing';
 import { reducers } from './reducers';
-
-// import { HarbourEffects, reducers } from './redux';
 
 @NgModule({
   imports: [
@@ -35,11 +35,11 @@ import { reducers } from './reducers';
     MatInputModule,
     MatSelectModule,
 
+    LocalStorageModule,
     HarbourRouting,
 
     StoreModule.forFeature('harbour', reducers),
-
-    // EffectsModule.forFeature([HarbourEffects])
+    EffectsModule.forFeature([CraftWarshipEffects])
   ],
   declarations: [
     HarbourComponent,

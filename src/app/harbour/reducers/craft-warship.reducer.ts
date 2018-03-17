@@ -14,7 +14,7 @@ export const initialState: Slice = {
 
 export function reducer(state = initialState, action: CraftWarshipActions): Slice {
   switch (action.type) {
-    case CraftWarshipActionTypes.ChooseWarshipPlan:
+    case CraftWarshipActionTypes.ChooseWarshipPlanSuccess:
       return {
         ...state,
         current: action.payload

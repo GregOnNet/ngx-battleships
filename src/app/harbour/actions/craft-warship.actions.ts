@@ -6,7 +6,14 @@ import {
 } from '../../lib/battleships/contracts';
 
 export enum CraftWarshipActionTypes {
-  ChooseWarshipPlan = '[Harbour] Choose Warhsip Plan',
+  ChooseWarshipPlanSuccess = '[Harbour] Choose Warhsip Plan Success',
+  ChooseWarshipPlan = '[Harbour] Choose Warhsip Plan'
+}
+
+export class ChooseWarshipPlanSuccess implements Action {
+  readonly type = CraftWarshipActionTypes.ChooseWarshipPlanSuccess;
+
+  constructor(public payload: IProvideWarshipPlan) {}
 }
 
 export class ChooseWarshipPlan implements Action {
@@ -15,4 +22,4 @@ export class ChooseWarshipPlan implements Action {
   constructor(public payload: IProvideWarshipPlan) {}
 }
 
-export type CraftWarshipActions = ChooseWarshipPlan;
+export type CraftWarshipActions = ChooseWarshipPlanSuccess | ChooseWarshipPlan;
