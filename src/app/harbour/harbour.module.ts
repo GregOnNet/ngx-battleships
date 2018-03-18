@@ -18,6 +18,10 @@ import { ShipSelectorComponent } from './components/ship-selector/ship-selector.
 import { CraftWarshipComponent } from './containers/craft-warship/craft-warship.component';
 import { HarbourComponent } from './harbour.component';
 import { HarbourRouting } from './harbour.routing';
+import { StoreModule } from '@ngrx/store';
+import * as fromHarbour from './reducers/harbour.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { HarbourEffects } from './effects/harbour.effects';
 
 @NgModule({
   imports: [
@@ -32,7 +36,9 @@ import { HarbourRouting } from './harbour.routing';
     MatSelectModule,
 
     LocalStorageModule,
-    HarbourRouting
+    HarbourRouting,
+    StoreModule.forFeature('harbour', fromHarbour.reducer),
+    EffectsModule.forFeature([HarbourEffects])
   ],
   declarations: [
     HarbourComponent,
