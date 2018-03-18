@@ -17,22 +17,20 @@ export const initialState: Slice = {
 
 export function reducer(state = initialState, action: HarbourActions): Slice {
   switch (action.type) {
-    case HarbourActionTypes.ChooseWarshipPlan:
+    case HarbourActionTypes.RecoverWarshipPlanSucess:
+    case HarbourActionTypes.ChooseWarshipPlanSuccess:
       return {
         ...state,
         warshipPlan: action.payload
       };
 
-    case HarbourActionTypes.DeclareMissionTarget:
+    case HarbourActionTypes.DeclareMissionTargetSucess:
       return {
         ...state,
         position: action.payload
       };
 
-    case HarbourActionTypes.HarbourAction:
-      return state;
-
-    default:
+      default:
       return state;
   }
 }

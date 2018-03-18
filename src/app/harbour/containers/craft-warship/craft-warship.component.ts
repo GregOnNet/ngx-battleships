@@ -48,6 +48,8 @@ export class CraftWarshipComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._store.dispatch(new Action.RecoverWarshipPlan());
+
     this.warshipPlan$ = this._store
       .pipe(
         select(fromHarbour.all),
