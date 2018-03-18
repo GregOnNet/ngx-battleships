@@ -37,7 +37,6 @@ export class Warhsip implements IDestroyWarShips {
   }
 
   private _throwIfInvalidCoordinatesHavePassed(coordinates: Coordinate[]) {
-    console.log(coordinates);
     const invalidCoordinate = coordinates.find(
       coordinate => coordinate.x < 1 || coordinate.y < 1
     );

@@ -15,7 +15,7 @@ import {
 @Injectable()
 export class CraftWarshipEffects {
   @Effect()
-  storeWarshipPlan = this._actions$.pipe(
+  recoverWarshipPlan = this._actions$.pipe(
     ofType(CraftWarshipActionTypes.RecoverWarshipPlan),
     switchMap((action: RecoverWarshipPlan) =>
       this._storage
@@ -25,7 +25,7 @@ export class CraftWarshipEffects {
   );
 
   @Effect()
-  recoverWarhsipPlan = this._actions$.pipe(
+  chooseWarshipPlan = this._actions$.pipe(
     ofType(CraftWarshipActionTypes.ChooseWarshipPlan),
     switchMap((action: ChooseWarshipPlan) =>
       this._storage
