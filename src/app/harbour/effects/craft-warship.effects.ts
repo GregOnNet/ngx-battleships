@@ -9,7 +9,8 @@ import {
   ChooseWarshipPlanSuccess,
   CraftWarshipActionTypes,
   RecoverWarshipPlan,
-  RecoverWarshipPlanSuccess
+  RecoverWarshipPlanSuccess,
+  NoWarshipPlanToRecover
 } from '../actions';
 
 @Injectable()
@@ -20,7 +21,9 @@ export class CraftWarshipEffects {
     switchMap((action: RecoverWarshipPlan) =>
       this._storage
         .get<IProvideWarshipPlan>('current-plan')
-        .pipe(map(warshipPlan => new RecoverWarshipPlanSuccess(warshipPlan)))
+        .pipe(map(warshipPlan => !!warshipPlan
+          ? new RecoverWarshipPlanSuccess(warshipPlan)
+          : new NoWarshipPlanToRecover()))
     )
   );
 

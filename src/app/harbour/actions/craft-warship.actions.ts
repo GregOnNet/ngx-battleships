@@ -7,13 +7,18 @@ import {
 
 export enum CraftWarshipActionTypes {
   RecoverWarshipPlan = '[Harbour] Recover Cached Warship Plan',
+  NoWarshipPlanToRecover = '[Harbour] There is no Warship to recover',
   RecoverWarshipPlanSuccess = '[Harbour] Recover Cached Warship Plan Success',
-  ChooseWarshipPlanSuccess = '[Harbour] Choose Warhsip Plan Success',
-  ChooseWarshipPlan = '[Harbour] Choose Warhsip Plan'
+  ChooseWarshipPlanSuccess = '[Harbour] Choose Warship Plan Success',
+  ChooseWarshipPlan = '[Harbour] Choose Warship Plan'
 }
 
 export class RecoverWarshipPlan implements Action {
   readonly type = CraftWarshipActionTypes.RecoverWarshipPlan;
+}
+
+export class NoWarshipPlanToRecover implements Action {
+  readonly type = CraftWarshipActionTypes.NoWarshipPlanToRecover;
 }
 
 export class RecoverWarshipPlanSuccess implements Action {
@@ -36,6 +41,7 @@ export class ChooseWarshipPlanSuccess implements Action {
 
 export type CraftWarshipActions =
   | ChooseWarshipPlan
+  | NoWarshipPlanToRecover
   | ChooseWarshipPlanSuccess
   | RecoverWarshipPlan
   | RecoverWarshipPlanSuccess;
