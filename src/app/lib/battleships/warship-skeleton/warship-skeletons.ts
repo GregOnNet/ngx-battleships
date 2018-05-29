@@ -18,6 +18,10 @@ export class WarshipSkeletons {
   }
 
   static byName(name: string): WarshipSkeleton {
-    return WarshipSkeletons.all().find(ws => ws.name === name);
+    const found = WarshipSkeletons.all().find(ws => ws.name === name);
+
+    return !!found
+      ? found
+      : {} as WarshipSkeleton;
   }
 }
