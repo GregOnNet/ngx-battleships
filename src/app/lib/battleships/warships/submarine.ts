@@ -1,6 +1,6 @@
-import { Warhsip } from './warship';
+import { WarShip } from './warship';
 
-export class Submarine extends Warhsip {
+export class Submarine extends WarShip {
   constructor(coordinates: [number, number][]) {
     super(coordinates, 3);
   }

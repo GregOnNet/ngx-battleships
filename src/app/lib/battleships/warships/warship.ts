@@ -2,7 +2,7 @@ import { AlignedCoordinate } from '../aligned-coordinate';
 import { IDestroyWarShips } from '../contracts/i-destroy-warships';
 import { Coordinate } from '../coordinate';
 
-export class Warhsip implements IDestroyWarShips {
+export class WarShip implements IDestroyWarShips {
   name = this.constructor.name;
 
   coordinates: Coordinate[];

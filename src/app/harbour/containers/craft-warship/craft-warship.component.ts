@@ -4,7 +4,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { tap, map } from 'rxjs/operators';
 
-import { Coordinate, Warhsip, WarshipSkeleton } from '../../../lib/battleships';
+import { Coordinate, WarShip, WarshipSkeleton } from '../../../lib/battleships';
 import {
   IProvideWarshipPlan,
   BattleFieldPosition
@@ -27,7 +27,7 @@ export class CraftWarshipComponent implements OnInit {
   selectedWarship: WarshipSkeleton = {} as WarshipSkeleton;
   warshipForm: FormGroup;
 
-  @Output() create = new EventEmitter<Warhsip>();
+  @Output() create = new EventEmitter<WarShip>();
 
   private get _enteredCoodinates(): BattleFieldPosition[] {
     const enteredCoordinates = this.warshipForm.get('coordinates') as FormArray;
