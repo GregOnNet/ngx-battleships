@@ -29,13 +29,13 @@ export class CraftWarshipComponent implements OnInit {
 
   @Output() create = new EventEmitter<WarShip>();
 
-  private get _enteredCoodinates(): BattleFieldPosition[] {
+  private get _enteredCoordinates(): BattleFieldPosition[] {
     const enteredCoordinates = this.warshipForm.get('coordinates') as FormArray;
     return enteredCoordinates.controls.map(control => control.value);
   }
 
   private get _enteredCoordinatesRaw(): [number, number][] {
-    return this._enteredCoodinates.map(
+    return this._enteredCoordinates.map(
       (c: Coordinate) => [c.x, c.y] as [number, number]
     );
   }
@@ -66,7 +66,7 @@ export class CraftWarshipComponent implements OnInit {
     coordinates.controls = this._provideCoordinateControls(selectedPlan.parts);
 
     combineLatest(coordinates.controls.map(c => c.valueChanges))
-      .pipe(map(() => this._enteredCoodinates))
+      .pipe(map(() => this._enteredCoordinates))
       .subscribe(positions =>
         this._store.dispatch(new Action.DeclareMissionTarget(positions))
       );
